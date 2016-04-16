@@ -3,7 +3,6 @@ package com.infosysengr.geoquiz;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static com.infosysengr.geoquiz.Answer.TRUE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,18 +38,25 @@ public class QuizTest {
     }
 
     @Test
-    public void answerQuestion_returnsTheNextQuestionFromTheQuestionBank() {
+    public void answerQuestion_whenAnswerIsCorrect_returnsTrue() {
         QuestionBank questionBank = mock(QuestionBank.class);
-        Question firstQuestion = mock(Question.class, "firstQuestion");
-        Question secondQuestion = mock(Question.class, "secondQuestion");
-        when(questionBank.nextQuestion()).thenReturn(
-                firstQuestion,
-                secondQuestion);
+        Question question = new Question(0, true);
+        when(questionBank.nextQuestion()).thenReturn(question);
 
         Quiz quiz = new Quiz(questionBank);
 
-        assertThat(quiz.getCurrentQuestion(), equalTo(firstQuestion));
-        assertThat(quiz.answerQuestion(TRUE), equalTo(secondQuestion));
+        assertThat(quiz.answerQuestion(Answer.TRUE), is(true));
+    }
+
+    @Test
+    public void answerQuestion_whenAnswerIsIncorrect_returnsFalse() {
+        QuestionBank questionBank = mock(QuestionBank.class);
+        Question question = new Question(0, true);
+        when(questionBank.nextQuestion()).thenReturn(question);
+
+        Quiz quiz = new Quiz(questionBank);
+
+        assertThat(quiz.answerQuestion(Answer.FALSE), is(false));
     }
 
     @Test
@@ -64,7 +70,7 @@ public class QuizTest {
 
         Quiz quiz = new Quiz(questionBank);
 
-        assertThat(quiz.answerQuestion(TRUE), equalTo(secondQuestion));
+        quiz.answerQuestion(Answer.TRUE);
         assertThat(quiz.getCurrentQuestion(), equalTo(secondQuestion));
     }
 }

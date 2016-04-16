@@ -13,8 +13,10 @@ public class Quiz {
         return currentQuestion;
     }
 
-    public Question answerQuestion(Answer answer) {
+    public boolean answerQuestion(Answer answer) {
+        boolean correct = currentQuestion.isTrue() == answer.equals(Answer.TRUE);
+
         currentQuestion = questionBank.nextQuestion();
-        return getCurrentQuestion();
+        return correct;
     }
 }
