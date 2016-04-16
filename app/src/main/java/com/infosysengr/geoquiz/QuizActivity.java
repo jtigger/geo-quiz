@@ -11,11 +11,13 @@ public class QuizActivity extends AppCompatActivity {
     private Button trueButton;
     private Button falseButton;
     private Button maybeButton;
-    private Button nextButton;
+    private Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        quiz = new Quiz(new InMemoryQuestionBank());
 
         setContentView(R.layout.activity_quiz);
         trueButton = (Button) findViewById(R.id.true_button);
@@ -28,6 +30,8 @@ public class QuizActivity extends AppCompatActivity {
                         R.string.incorrect_toast,
                         Toast.LENGTH_SHORT)
                         .show();
+                quiz.answerQuestion(Answer.TRUE);
+                displayNextQuestion();
             }
         });
 
@@ -40,6 +44,8 @@ public class QuizActivity extends AppCompatActivity {
                         R.string.correct_toast,
                         Toast.LENGTH_LONG)
                         .show();
+                quiz.answerQuestion(Answer.FALSE);
+                displayNextQuestion();
             }
         });
 
@@ -52,11 +58,17 @@ public class QuizActivity extends AppCompatActivity {
                         R.string.indecisive_toast,
                         Toast.LENGTH_LONG)
                         .show();
+                quiz.answerQuestion(Answer.MAYBE);
+                displayNextQuestion();
             }
         });
 
-        nextButton = (Button) findViewById(R.id.next_button);
+        displayNextQuestion();
+    }
+
+    private void displayNextQuestion() {
         TextView questionTextView = (TextView) findViewById(R.id.question_text_view);
+        questionTextView.setText(quiz.getCurrentQuestion().getQuestionResId());
     }
 }
 
