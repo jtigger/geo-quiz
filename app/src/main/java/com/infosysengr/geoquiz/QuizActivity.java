@@ -1,5 +1,6 @@
 package com.infosysengr.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,12 +29,28 @@ public class QuizActivity extends AppCompatActivity implements QuizListener {
                 quiz,
                 this);
 
+        final Button cheatButton = (Button) findViewById(R.id.cheat_button);
+        assert cheatButton != null;
+        cheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
+                intent.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE,
+                        quiz.getCurrentQuestion().isTrue());
+                startActivityForResult(intent, 0);
+            }
+        });
+
         displayNextQuestion();
     }
 
-    private void displayNextQuestion() {
-        TextView questionTextView = (TextView) findViewById(R.id.question_text_view);
-        questionTextView.setText(quiz.getCurrentQuestion().getQuestionResId());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null) {
+            return;
+        }
+
+        quiz.setCheating(data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false));
     }
 
     @Override
@@ -94,6 +111,11 @@ public class QuizActivity extends AppCompatActivity implements QuizListener {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
+    }
+
+    private void displayNextQuestion() {
+        TextView questionTextView = (TextView) findViewById(R.id.question_text_view);
+        questionTextView.setText(quiz.getCurrentQuestion().getQuestionResId());
     }
 }
 

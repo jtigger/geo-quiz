@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
-    <string name="default_question_text">...</string>
-    <string name="false_button">False</string>
-    <string name="true_button">True</string>
-    <string name="maybe_button">Maybe</string>
+    <string name="default_question_text">…</string>
     <string name="correct_toast">Well done!</string>
     <string name="incorrect_toast">You fool!</string>
     <string name="indecisive_toast">Make up yer mind!</string>
-    <string name="next_button"><![CDATA[Next >]]></string>
+
+    <string name="false_button">False</string>
+    <string name="true_button">True</string>
+    <string name="maybe_button">Maybe</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="judgment_toast">Cheating is wrong.</string>
+
     <string name="question_0">The Pacific Ocean is larger than the Atlantic Ocean.</string>
     <string name="question_1">The Suez Canal connects the Red Sea and the Indian Ocean.</string>
     <string name="question_2">The source of the Nile River is in Egypt.</string>
