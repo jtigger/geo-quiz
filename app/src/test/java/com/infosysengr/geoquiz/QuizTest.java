@@ -1,5 +1,6 @@
 package com.infosysengr.geoquiz;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -10,11 +11,21 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class QuizTest {
+    private QuestionBank questionBank;
+    private Question firstQuestion;
+    private Question secondQuestion;
+    private Question anyQuestion;
+
+    @Before
+    public void setUp() {
+        questionBank = mock(QuestionBank.class);
+        firstQuestion = mock(Question.class, "firstQuestion");
+        secondQuestion = mock(Question.class, "secondQuestion");
+        anyQuestion = new Question(0, true);
+    }
 
     @Test
     public void currentQuestion_onInit_returnsFirstQuestion() {
-        QuestionBank questionBank = mock(QuestionBank.class);
-        Question firstQuestion = mock(Question.class, "firstQuestion");
         when(questionBank.nextQuestion()).thenReturn(firstQuestion);
 
         Quiz quiz = new Quiz(questionBank);
@@ -24,9 +35,6 @@ public class QuizTest {
 
     @Test
     public void currentQuestion_calledMultipleTimes_returnsTheSameQuestion() {
-        QuestionBank questionBank = mock(QuestionBank.class);
-        Question firstQuestion = mock(Question.class, "firstQuestion");
-        Question secondQuestion = mock(Question.class, "secondQuestion");
         when(questionBank.nextQuestion()).thenReturn(
                 firstQuestion,
                 secondQuestion);
@@ -39,7 +47,6 @@ public class QuizTest {
 
     @Test
     public void answerQuestion_whenAnswerIsCorrect_returnsTrue() {
-        QuestionBank questionBank = mock(QuestionBank.class);
         Question question = new Question(0, true);
         when(questionBank.nextQuestion()).thenReturn(question);
 
@@ -50,9 +57,7 @@ public class QuizTest {
 
     @Test
     public void answerQuestion_whenAnswerIsIncorrect_returnsFalse() {
-        QuestionBank questionBank = mock(QuestionBank.class);
-        Question question = new Question(0, true);
-        when(questionBank.nextQuestion()).thenReturn(question);
+        when(questionBank.nextQuestion()).thenReturn(anyQuestion);
 
         Quiz quiz = new Quiz(questionBank);
 
@@ -61,9 +66,6 @@ public class QuizTest {
 
     @Test
     public void answerQuestion_setsTheNewCurrentQuestion() {
-        QuestionBank questionBank = mock(QuestionBank.class);
-        Question firstQuestion = mock(Question.class, "firstQuestion");
-        Question secondQuestion = mock(Question.class, "secondQuestion");
         when(questionBank.nextQuestion()).thenReturn(
                 firstQuestion,
                 secondQuestion);
