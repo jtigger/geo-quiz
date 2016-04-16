@@ -9,9 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity implements QuizListener {
-    private Button trueButton;
-    private Button falseButton;
-    private Button maybeButton;
     private Quiz quiz;
 
     private static final String TAG = "QuizActivity";
@@ -23,14 +20,11 @@ public class QuizActivity extends AppCompatActivity implements QuizListener {
         quiz = new Quiz(new InMemoryQuestionBank());
 
         setContentView(R.layout.activity_quiz);
-        trueButton = (Button) findViewById(R.id.true_button);
-        falseButton = (Button) findViewById(R.id.false_button);
-        maybeButton = (Button) findViewById(R.id.maybe_button);
 
         AnswerActuator answerActuator = new AnswerActuator(
-                trueButton,
-                falseButton,
-                maybeButton,
+                (Button) findViewById(R.id.true_button),
+                (Button) findViewById(R.id.false_button),
+                (Button) findViewById(R.id.maybe_button),
                 quiz,
                 this);
 
